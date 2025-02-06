@@ -1,17 +1,17 @@
 class Kniha:
-    def __init__(self,nazov,autor,isbn,dostupna,rok_vydania):
+    def __init__(self,nazov,autor,isbn,rok_vydania):
         self.nazov = nazov
         self.autor = autor
         self.isbn = isbn
-        self.dostupna = dostupna
+        self.dostupna = True
         self.rok_vydania = rok_vydania
 
     def __str__(self):
         dostupnost = ""
-        if kniha.dostupna:
+        if self.dostupna:
             dostupnost = "Dostupna"
         else:
-            dostupnost = "Nedostupna"
+            dostupnost = "Vypozicana"
         return "{} od {}, ISBN: {}, Rok: {}, {}".format(self.nazov,self.autor,self.isbn,self.rok_vydania,dostupnost)
 
     def vypozicat(self):
@@ -49,11 +49,22 @@ class Kniznica:
             if kniha.isbn == isbn:
                 kniha.dostupna = True
 
-    def zobrazit_zoznam_knih(self):
+    def zobrazit_dostupne_knihy(self):
         for kniha in self.zoznam_knih:
-            dostupnost = ""
             if kniha.dostupna:
-                dostupnost = "Dostupna"
-            else:
-                dostupnost = "Nedostupna"
-            print("{} od {}, ISBN: {}, Rok: {}, {}".format(kniha.nazov,kniha.autor,kniha.isbn,kniha.rok_vydania,dostupnost))
+                print("{} od {}, ISBN: {}, Rok: {}, Dostupna".format(kniha.nazov,kniha.autor,kniha.isbn,kniha.rok_vydania))
+
+# PRIKLAD #
+kniha1 = Kniha("Harry Potter","Rowlingova",123,2010)
+kniha2 = Kniha("Pan Prstenov","Tolkien",321,2003)
+kniha3 = Kniha("Daka kniha","Patrik",222,2010)
+
+kniznica = Kniznica()
+kniznica.pridat_knihu(kniha1)
+kniznica.pridat_knihu(kniha2)
+kniznica.pridat_knihu(kniha3)
+kniznica.vypozicat_knihu(123)
+print(kniha1)
+print(kniha2)
+print("--------")
+kniznica.zobrazit_dostupne_knihy()

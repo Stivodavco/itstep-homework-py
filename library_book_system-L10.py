@@ -6,6 +6,14 @@ class Kniha:
         self.dostupna = dostupna
         self.rok_vydania = rok_vydania
 
+    def __str__(self):
+        dostupnost = ""
+        if kniha.dostupna:
+            dostupnost = "Dostupna"
+        else:
+            dostupnost = "Nedostupna"
+        return "{} od {}, ISBN: {}, Rok: {}, {}".format(self.nazov,self.autor,self.isbn,self.rok_vydania,dostupnost)
+
     def vypozicat(self):
         if self.dostupna:
             self.dostupna = False

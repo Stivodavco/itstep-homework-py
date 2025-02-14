@@ -1,6 +1,3 @@
-import warnings
-
-
 class LinkedList: # custom version of a linked list (version developed in classroom)
     def __init__(self,head = None):
         self.head = head
@@ -60,6 +57,36 @@ class Prvok:
     def __init__(self,data,dalsi_prvok = None):
         self.data = data
         self.dalsi_prvok = dalsi_prvok
+
+class Menu:
+    @staticmethod
+    def ukaz_menu(linked_list : LinkedList):
+        print("(1) Add an item to the beginning of the list.")
+        print("(2) Delete the last item from the list.")
+        print("(3) Show the list contents")
+        print("(4) Check if the list contains a value.")
+        print("(5) Replace a value in the list at an index.")
+        print("(6) Exit.")
+        choice = input("Your choice (eg. \'1\'): ")
+
+        if choice == "1":
+            data = input("Data to insert: ")
+            linked_list.vloz(data)
+        elif choice == "2":
+            linked_list.vymaz_posledny()
+        elif choice == "3":
+            linked_list.vypis()
+        elif choice == "4":
+            data = input("Data to find: ")
+            linked_list.existuje_prvok(data)
+        elif choice == "5":
+            index = input("Index to replace: ")
+            data = input("Data to replace it with: ")
+            linked_list.nahrad_prvok(index,data)
+        elif choice == "6":
+            return
+        else:
+            print(f"\'{choice}\' is not a valid choice. Please enter 1,2,3,4,5 or 6.")
 
 # TEST
 test = LinkedList()

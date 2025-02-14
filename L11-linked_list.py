@@ -17,7 +17,8 @@ class LinkedList: # custom version of a linked list (version developed in classr
 
     def vymaz_posledny(self):
         if not self.head:
-            raise IndexError("List je prazdny!")
+            print("List je prazdny!")
+            return
         else:
             aktualny = self.head
             while aktualny.dalsi_prvok.dalsi_prvok != None:
@@ -25,6 +26,9 @@ class LinkedList: # custom version of a linked list (version developed in classr
             aktualny.dalsi_prvok = None
 
     def existuje_prvok(self,data):
+        if not self.head:
+            print("List je prazdny.")
+            return
         aktualny = self.head
         while True:
             if aktualny.data == data:
@@ -36,6 +40,9 @@ class LinkedList: # custom version of a linked list (version developed in classr
         return False
 
     def nahrad_prvok(self,index,nove_data):
+        if not self.head:
+            print("List je prazdny.")
+            return
         aktualny = self.head
         for i in range(index+1):
             if i == index:
@@ -46,6 +53,9 @@ class LinkedList: # custom version of a linked list (version developed in classr
                 raise IndexError("Zadany index je mimo rozsahu LinkedList!")
 
     def vypis(self):
+        if not self.head:
+            print("List je prazdny.")
+            return
         aktualny = self.head
         while True:
             print(aktualny.data)
@@ -71,24 +81,35 @@ class Menu:
 
         if choice == "1":
             data = input("Data to insert: ")
-            linked_list.vloz(data)
+            linked_list.vloz(Prvok(data))
         elif choice == "2":
             linked_list.vymaz_posledny()
         elif choice == "3":
             linked_list.vypis()
         elif choice == "4":
             data = input("Data to find: ")
-            linked_list.existuje_prvok(data)
+            if linked_list.existuje_prvok(data):
+                print("The data you entered exists.")
+            else:
+                print("The data you entered does NOT exist.")
         elif choice == "5":
             index = input("Index to replace: ")
             data = input("Data to replace it with: ")
-            linked_list.nahrad_prvok(index,data)
+            linked_list.nahrad_prvok(int(index),data)
         elif choice == "6":
-            return
+            return "exit"
         else:
             print(f"\'{choice}\' is not a valid choice. Please enter 1,2,3,4,5 or 6.")
+        print("-------------------------------------------")
 
-# TEST
+# TEST (with menu)
+main_list = LinkedList()
+while True:
+    result = Menu.ukaz_menu(main_list)
+    if result == "exit":
+        break
+
+# TEST (without menu)
 test = LinkedList()
 test.vloz(Prvok("hello"))
 test.vloz(Prvok(123))

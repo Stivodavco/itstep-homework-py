@@ -1,5 +1,4 @@
-from datetime import datetime
-
+import pytest
 class ValidatorRodnehoCisla:
     def __init__(self,rodne_cislo):
         self.rodne_cislo = rodne_cislo
@@ -27,7 +26,7 @@ class ValidatorRodnehoCisla:
         print(den)
         print(mesiac)
         max_dni = {
-            # MESIAC (aj zenske rodne cislo) : MAXIMALNY POCET DNI
+            # MESIAC : MAXIMALNY POCET DNI
             1 : 31,
             2: 29,
             3: 31,
@@ -40,18 +39,6 @@ class ValidatorRodnehoCisla:
             10: 31,
             11: 30,
             12: 31,
-            51: 31,
-            52: 29,
-            53: 31,
-            54: 30,
-            55: 31,
-            56: 30,
-            57: 31,
-            58: 31,
-            59: 30,
-            60: 31,
-            61: 30,
-            62: 31
         }
         return den > 0 and (den <= max_dni[mesiac] or den <= max_dni[mesiac-50])
 
@@ -60,9 +47,18 @@ class ValidatorRodnehoCisla:
 
     def skontroluj_validitu(self):
         if self.je_celocislo() and self.skontroluj_dlzku():
-            return self.skontroluj_mesiac() and self.skontroluj_den()
+            return self.skontroluj_mesiac() and self.skontroluj_den() and self.skontroluj_delitelnost()
         else:
             return False
 
-v = ValidatorRodnehoCisla(1204051234)
-print(v.skontroluj_validitu())
+@pytest.mark.parametrize("rodne_cislo,ocakavana_validita", [
+    (2501015154, True),
+    (2502301234, False),
+    (25023012345, False),
+    (2501011234, False),
+    (2551012475, True),
+    ("pes", False)
+])
+def rodne_cisla_test(rodne_cislo, ocakavana_validita):
+    v = ValidatorRodnehoCisla(rodne_cislo)
+    assert v.skontroluj_validitu() == ocakavana_validita
